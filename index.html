@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phantasmagoria | Coca-Cola Halloween</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              obsidian: '#060408',
+              ember: '#FF5E00',
+              crimson: '#D6001C',
+              parchment: '#F5EBE6',
+              emberSoft: '#FF8C42',
+              smoke: '#1A1418'
+            },
+            boxShadow: {
+              ember: '0 0 25px rgba(255,94,0,0.45)',
+              crimson: '0 0 25px rgba(214,0,28,0.35)',
+              glow: '0 0 50px rgba(255,94,0,0.22)'
+            },
+            fontFamily: {
+              display: ['Georgia', 'Times New Roman', 'serif'],
+              sans: ['ui-sans-serif', 'system-ui', 'sans-serif']
+            },
+            animation: {
+              float: 'float 7s ease-in-out infinite',
+              pulseSlow: 'pulseSlow 3s ease-in-out infinite',
+              drift: 'drift 10s linear infinite',
+              emberPulse: 'emberPulse 2.5s ease-in-out infinite'
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                '50%': { transform: 'translateY(-18px) rotate(2deg)' }
+              },
+              pulseSlow: {
+                '0%, 100%': { transform: 'scale(1)', opacity: '0.9' },
+                '50%': { transform: 'scale(1.08)', opacity: '1' }
+              },
+              drift: {
+                '0%': { transform: 'translateX(-10px) translateY(0px)' },
+                '50%': { transform: 'translateX(10px) translateY(-10px)' },
+                '100%': { transform: 'translateX(-10px) translateY(0px)' }
+              },
+              emberPulse: {
+                '0%, 100%': { boxShadow: '0 0 15px rgba(255,94,0,0.3)' },
+                '50%': { boxShadow: '0 0 30px rgba(255,94,0,0.75)' }
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --obsidian: #060408;
+        --ember: #FF5E00;
+        --crimson: #D6001C;
+        --parchment: #F5EBE6;
+        --smoke: #171114;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 15% 20%, rgba(255, 94, 0, 0.16), transparent 18%),
+          radial-gradient(circle at 85% 30%, rgba(214, 0, 28, 0.16), transparent 24%),
+          linear-gradient(180deg, #0b090b 0%, #060408 40%, #090609 100%);
+        color: var(--parchment);
+      }
+
+      .text-shadow-ember {
+        text-shadow: 0 0 18px rgba(255, 94, 0, 0.7), 0 0 35px rgba(255, 94, 0, 0.35), 0 0 55px rgba(214, 0, 28, 0.18);
+      }
+
+      .bg-grid {
+        background-image:
+          linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 22px 22px;
+      }
+
+      .glass-panel {
+        background: linear-gradient(180deg, rgba(23,17,20,0.82), rgba(11,9,11,0.72));
+        border: 1px solid rgba(255,255,255,0.08);
+        backdrop-filter: blur(8px);
+      }
+
+      .badge {
+        background: linear-gradient(135deg, rgba(255,94,0,0.22), rgba(214,0,28,0.20));
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+
+      .cta-button {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cta-button::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%);
+        transform: translateX(-120%);
+        transition: transform 0.7s ease;
+      }
+
+      .cta-button:hover::before {
+        transform: translateX(120%);
+      }
+
+      .section-title {
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      /* Simplified hero container: remove dark frame so only real can photo shows */
+      .bottle {
+        position: relative;
+        width: 340px;
+        height: 540px;
+        border-radius: 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        overflow: visible;
+        transform: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+      }
+
+      .real-product-media {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: inherit;
+      }
+
+      .real-product-media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: contain;
+        filter: saturate(0.98) contrast(1.06) brightness(0.95);
+        transform-origin: 50% 50%;
+      }
+
+      .real-product-media::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.12), rgba(0,0,0,0.22));
+        pointer-events: none;
+      }
+
+      .product-halloween-overlay {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 50% 15%, rgba(255, 158, 80, 0.26), transparent 18%),
+          radial-gradient(circle at 50% 100%, rgba(255, 79, 35, 0.18), transparent 20%),
+          linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,94,0,0.04));
+        pointer-events: none;
+      }
+
+      .product-scan-chip,
+      .product-mini-pumpkin,
+      .product-ar-badge {
+        position: absolute;
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      /* QR sticker: smaller, placed naturally on can with slight rotation and shadow */
+      .product-scan-chip {
+        right: 18px;
+        bottom: 18px;
+        width: 72px;
+        height: 72px;
+        border-radius: 2px;
+        background: transparent;
+        border: none;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.36);
+        transform: rotate(-6deg) translateZ(0);
+        overflow: visible;
+        display:flex;align-items:center;justify-content:center;
+        z-index:6;
+        pointer-events: none;
+      }
+
+      .product-scan-chip img {
+        width: 100%;
+        height: 100%;
+        object-fit:cover;
+        mix-blend-mode: multiply;
+        filter: contrast(1.06) saturate(0.05) brightness(0.98);
+        opacity: 0.95;
+        transform: rotate(-6deg) skewX(-6deg) scale(0.98);
+        display:block;
+      }
+
+      /* Printed-on-can graphics — subtle, use blending so it reads as printing */
+      .product-halloween-overlay {
+        position: absolute;
+        left: 50%;
+        top: 56%;
+        transform: translate(-50%, -50%) rotate(-2deg) skewX(-6deg);
+        width: 58%;
+        height: 46%;
+        border-radius: 6px;
+        background: radial-gradient(circle at 50% 20%, rgba(255,158,80,0.06), transparent 28%), linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,94,0,0.02));
+        mix-blend-mode: multiply;
+        pointer-events: none;
+        z-index: 3;
+        display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.92);font-weight:700;font-family:Georgia,serif;font-size:18px;letter-spacing:0.12em;text-transform:uppercase;opacity:0.92;
+      }
+
+      .product-print-stamp {
+        position:absolute;left:50%;top:62%;transform:translate(-50%,-50%) rotate(-4deg);z-index:4;color:rgba(255,255,255,0.92);font-weight:800;font-family:Georgia,serif;font-size:22px;text-shadow:0 1px 4px rgba(0,0,0,0.6);mix-blend-mode:multiply;pointer-events:none;opacity:0.92;letter-spacing:0.16em;
+      }
+
+      .product-scan-chip::before {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        border-radius: 8px;
+        background:
+          linear-gradient(90deg, rgba(255,255,255,0.15) 0 12%, transparent 12% 18%, rgba(255,255,255,0.15) 18% 30%, transparent 30% 40%, rgba(255,255,255,0.15) 40% 52%, transparent 52% 60%, rgba(255,255,255,0.15) 60% 72%, transparent 72% 84%, rgba(255,255,255,0.15) 84% 100%),
+          linear-gradient(rgba(255,255,255,0.15) 0 12%, transparent 12% 18%, rgba(255,255,255,0.15) 18% 30%, transparent 30% 40%, rgba(255,255,255,0.15) 40% 52%, transparent 52% 60%, rgba(255,255,255,0.15) 60% 72%, transparent 72% 84%, rgba(255,255,255,0.15) 84% 100%);
+      }
+
+      .product-mini-pumpkin {
+        left: 20px;
+        top: 28px;
+        width: 42px;
+        height: 42px;
+        border-radius: 50% 52% 46% 54%;
+        background: linear-gradient(145deg, #de7c2a, #a93e11);
+        box-shadow: 0 0 22px rgba(255,138,50,0.3);
+      }
+
+      .product-mini-pumpkin::before,
+      .product-mini-pumpkin::after {
+        content: "";
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: rgba(255,228,150,0.9);
+        top: 12px;
+        box-shadow: 0 0 12px rgba(255,190,80,0.6);
+      }
+
+      .product-mini-pumpkin::before { left: 9px; }
+      .product-mini-pumpkin::after { right: 9px; }
+
+      .product-ar-badge {
+        left: 50%;
+        top: 26px;
+        transform: translateX(-50%);
+        padding: 8px 12px;
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.8);
+        background: rgba(11,11,12,0.48);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 999px;
+      }
+
+      .bottle::before {
+        content: "";
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        top: 16px;
+        height: 42px;
+        border-radius: 16px 16px 12px 12px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.3), rgba(255,255,255,0.08));
+        border: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .bottle::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(255,255,255,0.2), transparent 12%, transparent 76%, rgba(255,255,255,0.12) 100%),
+          radial-gradient(circle at 28% 28%, rgba(255,255,255,0.18), transparent 30%),
+          radial-gradient(circle at 50% 72%, rgba(255,90,30,0.1), transparent 28%);
+        pointer-events: none;
+      }
+
+      .bottle-cap {
+        width: 138px;
+        height: 76px;
+        background: linear-gradient(180deg, #373638, #111214 38%, #1f1a1b 100%);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 18px 18px 10px 10px;
+        box-shadow: inset 0 6px 14px rgba(255,255,255,0.09), 0 12px 22px rgba(0,0,0,0.4);
+      }
+
+      /* Hide the decorative cap and legacy label when using real photo hero */
+      .bottle-cap { display: none !important; }
+      .bottle .can-label { display: none !important; }
+
+      .bottle .can-label {
+        position: absolute;
+        left: 50%;
+        top: 44%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        height: 32%;
+        padding: 18px 16px 12px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(10,10,12,0.18), rgba(5,5,7,0.06));
+        border: 1px solid rgba(255,255,255,0.14);
+        box-shadow: inset 0 0 18px rgba(255,255,255,0.06), 0 0 24px rgba(255,117,28,0.12);
+        text-align: center;
+      }
+
+      .bottle .can-label::before,
+      .bottle .can-label::after {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        top: 14px;
+        background: rgba(255,255,255,0.08);
+      }
+
+      .bottle .can-label::before { left: 12px; }
+      .bottle .can-label::after { right: 12px; }
+
+      .brand-tag {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.9);
+        font-weight: 700;
+        margin-top: 4px;
+        font-family: Georgia, serif;
+        font-style: italic;
+      }
+
+      .brand-name {
+        display: block;
+        margin-top: 12px;
+        font-size: 34px;
+        letter-spacing: 0.08em;
+        font-weight: 900;
+        color: #f7f5f3;
+        text-shadow: 0 0 18px rgba(255,255,255,0.14), 0 0 30px rgba(255,117,28,0.12);
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-style: italic;
+        transform: scaleY(1.1);
+      }
+
+      .brand-sub {
+        display: block;
+        margin-top: 6px;
+        font-size: 8px;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.78);
+      }
+
+      .brand-scan {
+        position: absolute;
+        right: 15px;
+        bottom: 14px;
+        width: 52px;
+        height: 52px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.12);
+        box-shadow: 0 0 18px rgba(255,255,255,0.06);
+        overflow: hidden;
+      }
+
+      .brand-scan::before {
+        content: "";
+        position: absolute;
+        inset: 7px;
+        background:
+          linear-gradient(90deg, rgba(255,255,255,0.15) 0 10%, transparent 10% 20%, rgba(255,255,255,0.15) 20% 30%, transparent 30% 40%, rgba(255,255,255,0.15) 40% 50%, transparent 50% 60%, rgba(255,255,255,0.15) 60% 70%, transparent 70% 80%, rgba(255,255,255,0.15) 80% 90%, transparent 90% 100%),
+          linear-gradient(rgba(255,255,255,0.15) 0 10%, transparent 10% 20%, rgba(255,255,255,0.15) 20% 30%, transparent 30% 40%, rgba(255,255,255,0.15) 40% 50%, transparent 50% 60%, rgba(255,255,255,0.15) 60% 70%, transparent 70% 80%, rgba(255,255,255,0.15) 80% 90%, transparent 90% 100%);
+        background-size: 100% 100%;
+        border-radius: 8px;
+      }
+
+      .can-drops {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .can-drops span {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95), rgba(190,214,255,0.62) 42%, rgba(255,255,255,0.1) 100%);
+        box-shadow: 0 0 12px rgba(255,255,255,0.22);
+        opacity: 0.88;
+      }
+
+      .drop-1 { top: 26px; left: 38px; }
+      .drop-2 { top: 72px; right: 42px; }
+      .drop-3 { top: 152px; left: 42px; }
+      .drop-4 { top: 206px; right: 38px; }
+      .drop-5 { bottom: 104px; left: 52px; }
+      .drop-6 { bottom: 72px; right: 48px; }
+
+      .ember-ring {
+        position: absolute;
+        inset: auto 18% -18px 18%;
+        height: 52px;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(255,120,52,0.82), rgba(214,0,28,0.18), transparent 68%);
+        filter: blur(12px);
+      }
+
+      .jack-o-lantern {
+        position: relative;
+        width: 180px;
+        height: 180px;
+        border-radius: 48% 52% 46% 54% / 52% 42% 58% 48%;
+        transform: rotate(12deg);
+        background:
+          radial-gradient(circle at 35% 20%, rgba(255, 236, 172, 0.96), rgba(255, 200, 94, 0.28) 18%, transparent 26%),
+          linear-gradient(145deg, #a61e10 0%, #c82d16 18%, #eb8627 46%, #e8a14a 72%, #a31910 100%);
+        box-shadow:
+          inset 0 18px 26px rgba(255,255,255,0.14),
+          inset -18px -16px 30px rgba(60,15,3,0.36),
+          0 0 28px rgba(255,118,0,0.22),
+          0 14px 32px rgba(0,0,0,0.32);
+        overflow: hidden;
+      }
+
+      .jack-o-lantern::before,
+      .jack-o-lantern::after {
+        content: "";
+        position: absolute;
+        width: 64px;
+        height: 60px;
+        top: 42px;
+        background: linear-gradient(180deg, rgba(255, 179, 74, 0.96), rgba(255, 215, 120, 0.94));
+        clip-path: polygon(0 80%, 14% 0, 100% 10%, 76% 100%);
+        box-shadow: 0 0 18px rgba(255, 196, 88, 0.7);
+      }
+
+      .jack-o-lantern::before { left: 22px; transform: rotate(-8deg); }
+      .jack-o-lantern::after { right: 22px; transform: scaleX(-1) rotate(-8deg); }
+
+      .jack-o-lantern .pumpkin-stem {
+        position: absolute;
+        left: 50%;
+        top: -34px;
+        width: 58px;
+        height: 70px;
+        transform: translateX(-50%) rotate(8deg);
+        border-radius: 38% 40% 42% 42%;
+        background: linear-gradient(180deg, #9a5a1b 0%, #5a2f12 100%);
+        box-shadow: inset 0 8px 10px rgba(255,255,255,0.1);
+      }
+
+      .jack-o-lantern .pumpkin-stem::before,
+      .jack-o-lantern .pumpkin-stem::after {
+        content: "";
+        position: absolute;
+        width: 18px;
+        height: 28px;
+        background: rgba(40,16,8,0.5);
+        border-radius: 50% 50% 48% 52%;
+        top: -6px;
+      }
+
+      .jack-o-lantern .pumpkin-stem::before { left: 8px; transform: rotate(-18deg); }
+      .jack-o-lantern .pumpkin-stem::after { right: 8px; transform: rotate(16deg); }
+
+      .jack-o-lantern .smile {
+        position: absolute;
+        left: 50%;
+        bottom: 28px;
+        width: 92px;
+        height: 58px;
+        transform: translateX(-50%);
+        background: linear-gradient(180deg, rgba(255, 228, 118, 0.9), rgba(255, 170, 55, 0.8));
+        clip-path: polygon(0 50%, 18% 10%, 31% 43%, 47% 14%, 64% 46%, 78% 8%, 100% 50%, 80% 100%, 50% 76%, 20% 100%);
+        box-shadow: 0 0 18px rgba(255, 180, 90, 0.75);
+      }
+
+      .product-showcase {
+        --showcase-glow: radial-gradient(circle at 50% 15%, rgba(138, 90, 255, 0.46), transparent 38%), radial-gradient(circle at 50% 100%, rgba(255, 94, 0, 0.3), transparent 55%);
+        --showcase-edge: rgba(186,134,255,0.85);
+        position: relative;
+        background: linear-gradient(180deg, rgba(21,15,19,0.85), rgba(11,9,11,0.82));
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: inset 0 0 30px rgba(255,255,255,0.02);
+      }
+
+      .showcase-glow {
+        position: absolute;
+        inset: 0;
+        background: var(--showcase-glow);
+        filter: blur(28px);
+        opacity: 0.95;
+      }
+
+      .showcase-stage {
+        position: relative;
+        height: 390px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .stage-floor {
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        bottom: 30px;
+        height: 26%;
+        border-radius: 999px;
+        background: radial-gradient(circle, rgba(255,94,0,0.18), rgba(255,94,0,0.03), transparent 72%);
+        filter: blur(8px);
+      }
+
+      .showcase-can {
+        position: relative;
+        z-index: 1;
+        width: 210px;
+        height: 328px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: showcaseSpin 18s linear infinite;
+      }
+
+      @keyframes showcaseSpin {
+        0% { transform: rotateY(0deg) rotateZ(-8deg); }
+        50% { transform: rotateY(180deg) rotateZ(8deg); }
+        100% { transform: rotateY(360deg) rotateZ(-8deg); }
+      }
+
+      .can-top {
+        position: absolute;
+        top: -12px;
+        width: 126px;
+        height: 58px;
+        border-radius: 18px 18px 12px 12px;
+        background: linear-gradient(180deg, #3d3638, #101113);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: inset 0 4px 12px rgba(255,255,255,0.08);
+      }
+
+      .can-body {
+        position: relative;
+        width: 200px;
+        height: 300px;
+        border-radius: 24px 24px 36px 36px;
+        background: linear-gradient(180deg, rgba(28,18,32,0.96), rgba(10,7,10,0.98));
+        border: 1px solid rgba(255,255,255,0.12);
+        box-shadow: inset 0 0 18px rgba(255,255,255,0.05), 0 0 35px rgba(93,59,255,0.1), 0 18px 46px rgba(0,0,0,0.55);
+        overflow: hidden;
+      }
+
+      .can-body::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(255,255,255,0.16), transparent 20%, transparent 80%, rgba(255,255,255,0.10));
+      }
+
+      .can-body::after {
+        content: "";
+        position: absolute;
+        left: 12%;
+        right: 12%;
+        bottom: 26px;
+        height: 32%;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,94,0,0.18), rgba(255,94,0,0.02), transparent 72%);
+        filter: blur(12px);
+      }
+
+      .can-logo {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-top: 24px;
+        text-align: center;
+        gap: 8px;
+        color: rgba(255,255,255,0.96);
+        text-shadow: 0 0 14px rgba(255,255,255,0.18);
+      }
+
+      .logo-small {
+        font-size: 11px;
+        letter-spacing: 0.35em;
+        text-transform: uppercase;
+        opacity: 0.82;
+        font-family: Georgia, serif;
+        font-style: italic;
+      }
+
+      .logo-main {
+        font-size: 36px;
+        letter-spacing: 0.08em;
+        font-weight: 900;
+        color: #fff7ef;
+        font-family: Georgia, serif;
+        font-style: italic;
+        transform: scaleY(1.12);
+      }
+
+      .logo-mini {
+        font-size: 10px;
+        letter-spacing: 0.42em;
+        text-transform: uppercase;
+        opacity: 0.8;
+      }
+
+      .condensation {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.92), rgba(191,215,255,0.52), rgba(255,255,255,0.1) 68%);
+        box-shadow: 0 0 10px rgba(255,255,255,0.35);
+        opacity: 0.9;
+      }
+
+      /* Real photo integration */
+      .real-can { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 18px; }
+      .showcase-real-can { width: 200px; height: 300px; border-radius: 22px; object-fit: cover; }
+      .photo-wrap { position: relative; display: inline-block; }
+      .ar-overlay { position: absolute; inset: 8% 6% 6% auto; width: 56px; height: 56px; border-radius: 10px; background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.12); display:flex;align-items:center;justify-content:center; font-weight:700; color:rgba(255,255,255,0.9); box-shadow: 0 6px 18px rgba(0,0,0,0.45); }
+      .photo-glow { position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen; background: radial-gradient(circle at 50% 10%, rgba(255,94,0,0.18), transparent 24%); opacity:0.9; }
+
+      .condensation-1 { top: 24px; left: 30px; }
+      .condensation-2 { top: 52px; right: 34px; }
+      .condensation-3 { top: 120px; left: 46px; }
+      .condensation-4 { top: 150px; right: 40px; }
+      .condensation-5 { top: 204px; left: 60px; }
+      .condensation-6 { top: 236px; right: 26px; }
+
+      .flavor-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 18px 14px;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.06);
+        background: rgba(255,255,255,0.02);
+        color: rgba(245,235,230,0.85);
+        text-align: left;
+        transition: all 0.25s ease;
+      }
+
+      .flavor-card.active {
+        background: linear-gradient(180deg, rgba(255,94,0,0.12), rgba(214,0,28,0.08));
+        border-color: rgba(255,94,0,0.4);
+        box-shadow: 0 0 26px rgba(255,94,0,0.14);
+      }
+
+      .card-index {
+        font-size: 1.6rem;
+        font-weight: 900;
+        color: var(--ember);
+      }
+
+      .card-name {
+        font-size: 0.78rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        opacity: 0.82;
+      }
+
+      .collectible-box {
+        position: relative;
+        width: min(22rem, 76vw);
+        height: 18rem;
+        border-radius: 24px;
+        border: 1px solid rgba(255,94,0,0.4);
+        background: linear-gradient(180deg, rgba(24,15,17,0.92), rgba(10,8,10,0.88));
+        box-shadow: 0 0 35px rgba(255,94,0,0.2), inset 0 0 18px rgba(255,255,255,0.04);
+        padding: 1.2rem;
+      }
+
+      .box-lid {
+        position: absolute;
+        left: 22%;
+        right: 22%;
+        top: -14px;
+        height: 20px;
+        border-radius: 10px 10px 8px 8px;
+        background: linear-gradient(180deg, rgba(255,94,0,0.54), rgba(214,0,28,0.54));
+        box-shadow: 0 0 20px rgba(255,94,0,0.28);
+      }
+
+      .box-body {
+        position: absolute;
+        inset: 22px 18px 18px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(14,11,12,0.9), rgba(5,4,6,0.95));
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+
+      .mini-can {
+        position: absolute;
+        bottom: 18px;
+        width: 90px;
+        height: 120px;
+        border-radius: 18px 18px 20px 20px;
+        background: linear-gradient(180deg, rgba(15,15,18,0.98), rgba(7,6,8,0.98));
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: inset 0 0 12px rgba(255,255,255,0.06), 0 10px 20px rgba(0,0,0,0.38);
+      }
+
+      .mini-can::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 18px;
+        right: 18px;
+        height: 18px;
+        border-radius: 10px 10px 8px 8px;
+        background: linear-gradient(180deg, rgba(43,39,41,0.95), rgba(12,10,11,0.95));
+      }
+
+      .mini-can-a { left: 24%; }
+      .mini-can-b { right: 24%; }
+
+      .rune-card {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 66px;
+        height: 66px;
+        border-radius: 18px;
+        border: 1px solid rgba(255,255,255,0.08);
+        background: linear-gradient(180deg, rgba(255,94,0,0.18), rgba(214,0,28,0.12));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(245,235,230,0.92);
+        font-weight: 900;
+        letter-spacing: 0.22em;
+        box-shadow: 0 0 16px rgba(255,94,0,0.18);
+      }
+
+      .countdown-box {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.06);
+      }
+
+      @media (max-width: 768px) {
+        .showcase-stage {
+          height: 300px;
+        }
+
+        .showcase-can {
+          width: 180px;
+          height: 270px;
+        }
+
+        .can-body {
+          width: 170px;
+          height: 250px;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen overflow-x-hidden">
+    <div class="fixed inset-0 bg-grid opacity-20 pointer-events-none"></div>
+
+    <header class="relative z-20">
+      <nav class="max-w-7xl mx-auto px-4 md:px-8 py-6 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-ember to-crimson shadow-ember flex items-center justify-center font-black text-lg">C</div>
+          <div>
+            <div class="tracking-[0.35em] text-[10px] text-parchment/70">COCA-COLA</div>
+            <div class="tracking-[0.28em] text-xs text-ember font-semibold">PHANTASMAGORIA</div>
+          </div>
+        </div>
+
+        <div class="hidden md:flex items-center gap-8 text-sm uppercase tracking-[0.25em] text-parchment/75">
+          <a href="#story" class="hover:text-ember transition">Story</a>
+          <a href="#experience" class="hover:text-ember transition">WebAR</a>
+          <a href="#drop" class="hover:text-ember transition">Drops</a>
+          <a href="#rsvp" class="hover:text-ember transition">RSVP</a>
+        </div>
+
+        <button class="cta-button rounded-full border border-ember/60 bg-gradient-to-r from-ember to-crimson px-5 py-2.5 text-xs font-bold tracking-[0.22em] uppercase shadow-ember hover:scale-[1.02] transition">
+          Pre-Order
+        </button>
+      </nav>
+    </header>
+
+    <main class="relative z-10">
+      <section class="max-w-7xl mx-auto px-4 md:px-8 pb-20 pt-10 md:pt-14">
+        <div class="grid lg:grid-cols-[1.2fr_0.8fr] items-center gap-14">
+          <div class="relative">
+            <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-ember/30 bg-ember/10 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.28em] text-ember">
+              <span class="inline-block w-2 h-2 rounded-full bg-ember animate-pulse"></span>
+              2026 Halloween Special Campaign
+            </div>
+
+            <h1 class="font-display mt-6 text-5xl md:text-6xl xl:text-[6.2rem] leading-[0.88] text-parchment text-shadow-ember tracking-[-0.06em]">
+              PHANTAS<span class="text-ember">MAGORIA</span>
+            </h1>
+
+            <p class="mt-6 max-w-xl text-base md:text-lg leading-8 text-parchment/75">
+              A dark Halloween drink with berry taste, warm spice, and a strong night vibe. Join the drop and feel the mood.
+            </p>
+
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              <button class="cta-button rounded-full bg-gradient-to-r from-ember to-crimson px-7 py-3.5 text-sm font-bold uppercase tracking-[0.22em] text-white shadow-ember transition hover:translate-y-[-1px]">
+                Enter the Hunt
+              </button>
+              <button class="rounded-full border border-white/10 bg-white/3 px-7 py-3.5 text-sm font-bold uppercase tracking-[0.22em] text-parchment/85 hover:border-ember/40 hover:text-ember transition">
+                Watch Trailer
+              </button>
+            </div>
+
+            <div class="mt-10 flex flex-wrap items-center gap-4 text-sm text-parchment/65">
+              <div class="badge rounded-full px-4 py-2">Limited 2.5k drops</div>
+              <div class="badge rounded-full px-4 py-2">WebAR No App Required</div>
+              <div class="badge rounded-full px-4 py-2">Pop-up RSVPs LIVE</div>
+            </div>
+          </div>
+
+          <div class="relative flex justify-center items-center py-10 lg:py-0 lg:translate-x-[-52px]">
+            <div class="absolute right-8 top-12 w-32 h-32 rounded-full bg-ember/15 blur-3xl"></div>
+            <div class="absolute left-4 bottom-8 w-24 h-24 rounded-full bg-crimson/20 blur-3xl"></div>
+
+            <div class="relative animate-float">
+              <div class="bottle-cap mx-auto mb-[-2px] relative z-20"></div>
+              <div class="bottle relative z-10 mx-auto" id="heroProductFrame">
+                <div class="can-drops">
+                  <span class="drop-1"></span>
+                  <span class="drop-2"></span>
+                  <span class="drop-3"></span>
+                  <span class="drop-4"></span>
+                  <span class="drop-5"></span>
+                  <span class="drop-6"></span>
+                </div>
+                <div class="can-label">
+                  <span class="brand-tag">Coca-Cola</span>
+                  <span class="brand-name">PHANTA</span>
+                  <span class="brand-sub">Halloween 2026</span>
+                  <span class="brand-scan" aria-label="AR scan code"></span>
+                </div>
+                <div class="absolute inset-x-5 bottom-10 h-28 rounded-[30px] bg-gradient-to-b from-ember/25 via-crimson/15 to-transparent"></div>
+                <div class="ember-ring"></div>
+              </div>
+            </div>
+
+            <div class="absolute left-4 top-6 animate-drift">
+              <div class="jack-o-lantern">
+                <div class="pumpkin-stem"></div>
+                <div class="smile"></div>
+              </div>
+            </div>
+
+            <div class="absolute right-6 bottom-10 animate-float [animation-delay:150ms]">
+              <div class="w-20 h-20 rounded-full bg-gradient-to-br from-ember/70 via-amber-500/60 to-red-700/70 blur-[2px] shadow-ember"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="story" class="relative max-w-7xl mx-auto px-4 md:px-8 py-20">
+        <div class="mb-8 flex items-end justify-between gap-4">
+          <div>
+            <div class="section-title text-xs tracking-[0.38em] text-ember/80">Brand Story</div>
+            <h2 class="mt-3 text-3xl md:text-5xl font-display text-parchment">A dark drink with a strong night mood</h2>
+          </div>
+          <div class="hidden md:block h-px flex-1 bg-gradient-to-r from-ember/50 via-white/15 to-transparent"></div>
+        </div>
+
+        <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-stretch">
+          <div class="glass-panel rounded-[2rem] p-6 md:p-8 relative overflow-hidden">
+            <div class="absolute -right-10 top-0 h-48 w-48 rounded-full bg-ember/15 blur-3xl"></div>
+            <p class="max-w-2xl text-lg leading-8 text-parchment/80">
+              The can is designed to feel like a real limited drop: black metal, cold glass glow, deep red finish, and a midnight look built for Halloween night. The biggest idea is not just the flavor — it is the AR layer built into the bottle itself.
+            </p>
+
+            <div class="mt-8 grid sm:grid-cols-3 gap-4">
+              <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
+                <div class="text-3xl font-black text-ember">01</div>
+                <div class="mt-3 text-xs uppercase tracking-[0.25em] text-parchment/65">Scan to Enter</div>
+                <div class="mt-2 text-parchment/70">Scan the QR code on the can to unlock the WebAR portal in your browser.</div>
+              </div>
+              <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
+                <div class="text-3xl font-black text-ember">02</div>
+                <div class="mt-3 text-xs uppercase tracking-[0.25em] text-parchment/65">AR in Your Space</div>
+                <div class="mt-2 text-parchment/70">Open the camera and the room becomes a haunted night scene with fog, glow, and spirits.</div>
+              </div>
+              <div class="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
+                <div class="text-3xl font-black text-ember">03</div>
+                <div class="mt-3 text-xs uppercase tracking-[0.25em] text-parchment/65">Glow on the Can</div>
+                <div class="mt-2 text-parchment/70">The can itself reacts in AR with neon detail, ember light, and a floating Halloween aura.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-showcase rounded-[2rem] p-5 md:p-6 relative overflow-hidden">
+            <div class="showcase-glow"></div>
+            <div class="showcase-stage">
+              <div class="stage-floor"></div>
+              <div class="showcase-can" id="showcaseCan">
+                <div class="can-top"></div>
+                <div class="can-body">
+                  <div class="condensation condensation-1"></div>
+                  <div class="condensation condensation-2"></div>
+                  <div class="condensation condensation-3"></div>
+                  <div class="condensation condensation-4"></div>
+                  <div class="condensation condensation-5"></div>
+                  <div class="condensation condensation-6"></div>
+                  <div class="can-logo">
+                    <span class="logo-small">Coca-Cola</span>
+                    <span class="logo-main">PHANTA</span>
+                    <span class="logo-mini">Halloween</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-2 gap-3">
+              <button class="flavor-card active" data-theme="berry" type="button">
+                <span class="card-index">01</span>
+                <span class="card-name">BlackBerry</span>
+              </button>
+              <button class="flavor-card" data-theme="cinnamon" type="button">
+                <span class="card-index">02</span>
+                <span class="card-name">Cinnamon Ember</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" class="max-w-7xl mx-auto px-4 md:px-8 py-20">
+        <div class="mb-8 text-center">
+          <div class="section-title text-xs tracking-[0.38em] text-ember/80">WebAR Experience</div>
+          <h2 class="mt-3 text-3xl md:text-5xl font-display text-parchment">Scan the can and enter the haunted night</h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass-panel rounded-[2rem] p-6">
+            <div class="mb-5 flex items-center justify-between">
+              <div class="text-2xl font-black text-ember">01</div>
+              <div class="w-11 h-11 rounded-full bg-ember/10 flex items-center justify-center text-2xl">📲</div>
+            </div>
+            <h3 class="text-xl font-semibold text-parchment">Scan the code</h3>
+            <p class="mt-4 text-parchment/70 leading-7">
+              Users scan the code on the can to log in to the WebAR world. No app is needed. The browser opens the Halloween portal instantly.
+            </p>
+          </div>
+
+          <div class="glass-panel rounded-[2rem] p-6 ring-1 ring-ember/30 shadow-ember">
+            <div class="mb-5 flex items-center justify-between">
+              <div class="text-2xl font-black text-ember">02</div>
+              <div class="w-11 h-11 rounded-full bg-ember/10 flex items-center justify-center text-2xl">🕯</div>
+            </div>
+            <h3 class="text-xl font-semibold text-parchment">AR layers in your space</h3>
+            <p class="mt-4 text-parchment/70 leading-7">
+              Once the camera opens, the user sees fog, glowing jack-o'-lanterns, ember trails, and a neon Halloween scene placed around their real environment.
+            </p>
+          </div>
+
+          <div class="glass-panel rounded-[2rem] p-6">
+            <div class="mb-5 flex items-center justify-between">
+              <div class="text-2xl font-black text-ember">03</div>
+              <div class="w-11 h-11 rounded-full bg-ember/10 flex items-center justify-center text-2xl">✨</div>
+            </div>
+            <h3 class="text-xl font-semibold text-parchment">The can glows too</h3>
+            <p class="mt-4 text-parchment/70 leading-7">
+              In the AR world, the can gains a glow effect, a floating aura, and theatrical light so the product feels alive inside the scene.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="drop" class="max-w-7xl mx-auto px-4 md:px-8 py-20">
+        <div class="glass-panel rounded-[2rem] p-6 md:p-8">
+          <div class="grid lg:grid-cols-[0.9fr_1.1fr] items-center gap-8">
+            <div>
+              <div class="section-title text-xs tracking-[0.38em] text-ember/80">Limited Release</div>
+              <h2 class="mt-3 text-3xl md:text-5xl font-display text-parchment">The summer night drop is here</h2>
+              <p class="mt-5 text-parchment/75 leading-7">
+                Each bottle keeps the dark look with a strong Halloween feel and a clean collectible style.
+              </p>
+
+              <div class="mt-8 flex items-center gap-4 flex-wrap">
+                <button class="cta-button rounded-full bg-gradient-to-r from-ember to-crimson px-6 py-3 text-sm uppercase tracking-[0.22em] font-bold text-white shadow-ember">
+                  Reserve Yours
+                </button>
+                <div class="text-sm font-semibold tracking-[0.12em] uppercase text-parchment/80">Ships 10/20 – 11/03</div>
+              </div>
+            </div>
+
+            <div class="relative flex justify-center">
+              <div class="absolute w-[18rem] h-[18rem] rounded-full bg-ember/15 blur-3xl"></div>
+              <div class="collectible-box">
+                <div class="box-lid"></div>
+                <div class="box-body">
+                  <div class="mini-can mini-can-a"></div>
+                  <div class="mini-can mini-can-b"></div>
+                  <div class="rune-card">
+                    <span>AR</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="rsvp" class="max-w-7xl mx-auto px-4 md:px-8 py-20">
+        <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 items-center">
+          <div class="glass-panel rounded-[2rem] p-6 md:p-8">
+            <div class="section-title text-xs tracking-[0.38em] text-ember/80">Pop-Up RSVP</div>
+            <h2 class="mt-3 text-3xl md:text-5xl font-display text-parchment">Dark night, live music, and a warm glow</h2>
+
+            <div class="mt-8 grid sm:grid-cols-3 gap-4">
+              <div class="countdown-box rounded-2xl p-4 text-center">
+                <div id="days" class="text-3xl font-black text-ember">12</div>
+                <div class="mt-2 text-[10px] uppercase tracking-[0.3em] text-parchment/60">Days</div>
+              </div>
+              <div class="countdown-box rounded-2xl p-4 text-center">
+                <div id="hours" class="text-3xl font-black text-ember">08</div>
+                <div class="mt-2 text-[10px] uppercase tracking-[0.3em] text-parchment/60">Hours</div>
+              </div>
+              <div class="countdown-box rounded-2xl p-4 text-center">
+                <div id="minutes" class="text-3xl font-black text-ember">44</div>
+                <div class="mt-2 text-[10px] uppercase tracking-[0.3em] text-parchment/60">Minutes</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-[2rem] border border-ember/30 bg-gradient-to-br from-ember/10 via-transparent to-crimson/10 p-6 md:p-8 shadow-ember">
+            <div class="mb-5 text-xs uppercase tracking-[0.35em] text-ember">Guest List</div>
+            <form class="space-y-4">
+              <input type="text" placeholder="Name" class="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-parchment placeholder:text-parchment/30 focus:outline-none focus:ring-2 focus:ring-ember/60" />
+              <input type="email" placeholder="Email" class="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-parchment placeholder:text-parchment/30 focus:outline-none focus:ring-2 focus:ring-ember/60" />
+              <select class="w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-parchment focus:outline-none focus:ring-2 focus:ring-ember/60">
+                <option class="text-black">Choose location</option>
+                <optgroup label="Asia" class="text-black">
+                  <option class="text-black">Seoul • South Korea</option>
+                  <option class="text-black">Tokyo • Japan</option>
+                  <option class="text-black">Shanghai • China</option>
+                  <option class="text-black">Hong Kong • China</option>
+                  <option class="text-black">Singapore • Singapore</option>
+                </optgroup>
+                <optgroup label="Americas" class="text-black">
+                  <option class="text-black">New York • USA</option>
+                </optgroup>
+                <optgroup label="Europe" class="text-black">
+                  <option class="text-black">London • United Kingdom</option>
+                  <option class="text-black">Paris • France</option>
+                  <option class="text-black">Berlin • Germany</option>
+                  <option class="text-black">Rome • Italy</option>
+                  <option class="text-black">Amsterdam • Netherlands</option>
+                </optgroup>
+              </select>
+              <button type="submit" class="cta-button w-full rounded-xl bg-gradient-to-r from-ember to-crimson px-6 py-3 text-sm font-bold uppercase tracking-[0.22em] text-white shadow-ember">
+                RSVP Now
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="max-w-7xl mx-auto px-4 md:px-8 pb-12 pt-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-parchment/55">
+        <div>© 2026 The Coca-Cola Company • Phantasmagoria</div>
+        <div class="flex items-center gap-6 uppercase tracking-[0.22em] text-[10px]">
+          <span>Halloween</span>
+          <span>WebAR</span>
+          <span>Limited Release</span>
+        </div>
+      </div>
+      <div class="mt-4 text-xs text-parchment/60">
+        Photos: Pexels — olenkabohovyk, alleksana, qaarif (images used under Pexels license). Source pages: https://www.pexels.com/
+      </div>
+    </footer>
+
+    <script>
+      const targetDate = new Date('2026-10-31T00:00:00');
+
+      const countdown = () => {
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if (diff <= 0) {
+          document.getElementById('days').textContent = '00';
+          document.getElementById('hours').textContent = '00';
+          document.getElementById('minutes').textContent = '00';
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+        document.getElementById('days').textContent = String(days).padStart(2, '0');
+        document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      };
+
+      countdown();
+      setInterval(countdown, 1000);
+
+      document.querySelector('form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const button = this.querySelector('button[type="submit"]');
+        button.textContent = 'RSVP Confirmed';
+        button.disabled = true;
+        button.style.opacity = '0.8';
+      });
+
+      const fallbackImage = 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=900&q=80';
+
+      const setRealCanImage = (imageUrl) => {
+        const heroTarget = document.getElementById('heroProductFrame');
+        const showcaseTarget = document.getElementById('showcaseCan');
+
+        if (heroTarget) {
+          heroTarget.innerHTML = `
+            <div class="real-product-media photo-wrap" style="width:320px;height:520px;border-radius:12px;">
+              <img src="${imageUrl}" alt="Real Coca-Cola can for Phantasmagoria Halloween edition" />
+              <div class="product-scan-chip"></div>
+            </div>
+          `;
+        }
+
+        if (showcaseTarget) {
+          showcaseTarget.innerHTML = `
+            <div class="real-product-media" style="border-radius:24px; box-shadow: 0 24px 40px rgba(0,0,0,0.38); width:220px; height:360px;">
+              <img src="${imageUrl}" alt="Halloween edition Coca-Cola can display" />
+              <div class="product-scan-chip" style="right:14px; bottom:14px; width:48px; height:48px;"></div>
+            </div>
+          `;
+        }
+      };
+
+      async function loadRealCokeCan() {
+        const localImages = [
+          'assets/images/can_transparent.png',
+          'assets/images/can_transparent.png',
+          'assets/images/can_transparent.png'
+        ];
+
+        try {
+          const pick = localImages[Math.floor(Math.random() * localImages.length)];
+          setRealCanImage(pick);
+        } catch (err) {
+          console.warn('Failed to load transparent can image, using fallback.', err);
+          setRealCanImage(fallbackImage);
+        }
+      }
+
+      const flavorCards = document.querySelectorAll('.flavor-card');
+      const themes = {
+        berry: {
+          glow: 'radial-gradient(circle at 50% 15%, rgba(160, 106, 255, 0.5), transparent 38%), radial-gradient(circle at 50% 100%, rgba(255, 94, 0, 0.22), transparent 55%)',
+          body: 'linear-gradient(180deg, rgba(29,17,34,0.96) 0%, rgba(12,10,17,0.96) 100%)',
+          edge: 'rgba(186,134,255,0.85)'
+        },
+        cinnamon: {
+          glow: 'radial-gradient(circle at 50% 15%, rgba(255, 123, 69, 0.5), transparent 38%), radial-gradient(circle at 50% 100%, rgba(214, 0, 28, 0.25), transparent 55%)',
+          body: 'linear-gradient(180deg, rgba(34,18,14,0.96) 0%, rgba(22,10,8,0.96) 100%)',
+          edge: 'rgba(255,130,76,0.85)'
+        }
+      };
+
+      const applyTheme = (key) => {
+        const theme = themes[key] || themes.berry;
+        const productShowcase = document.querySelector('.product-showcase');
+        productShowcase.style.setProperty('--showcase-glow', theme.glow);
+        productShowcase.style.setProperty('--showcase-edge', theme.edge);
+        const canBody = document.querySelector('.can-body');
+        canBody.style.background = theme.body;
+        canBody.style.boxShadow = `inset 0 0 18px rgba(255,255,255,0.05), 0 0 35px ${theme.edge}33, 0 18px 50px rgba(0,0,0,0.55)`;
+      };
+
+      flavorCards.forEach((card) => {
+        card.addEventListener('mouseenter', () => {
+          flavorCards.forEach((item) => item.classList.remove('active'));
+          card.classList.add('active');
+          applyTheme(card.dataset.theme);
+        });
+      });
+
+      applyTheme('berry');
+      loadRealCokeCan();
+
+      // Insert the local QR image into scan chips and overlays so scanning opens this landing page.
+      const qrPathLocal = 'assets/images/qr.png';
+      const placeQRCode = () => {
+        document.querySelectorAll('.product-scan-chip').forEach(el => {
+          el.innerHTML = `<img src="${qrPathLocal}" alt="Scan to open Phantasmagoria" />`;
+        });
+        document.querySelectorAll('.ar-overlay').forEach(el => {
+          // keep a small AR badge in places where overlay exists
+          el.innerHTML = `<div style="font-weight:700;font-size:11px;letter-spacing:0.18em;color:rgba(255,255,255,0.9);">AR</div>`;
+        });
+      };
+      // Delay to ensure dynamic DOM injected by loadRealCokeCan is present.
+      setTimeout(placeQRCode, 600);
+    </script>
+  </body>
+</html>
