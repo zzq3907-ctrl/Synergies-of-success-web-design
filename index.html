@@ -857,25 +857,7 @@
             <div class="absolute left-4 bottom-8 w-24 h-24 rounded-full bg-crimson/20 blur-3xl"></div>
 
             <div class="relative animate-float">
-              <div class="bottle-cap mx-auto mb-[-2px] relative z-20"></div>
-              <div class="bottle relative z-10 mx-auto" id="heroProductFrame">
-                <div class="can-drops">
-                  <span class="drop-1"></span>
-                  <span class="drop-2"></span>
-                  <span class="drop-3"></span>
-                  <span class="drop-4"></span>
-                  <span class="drop-5"></span>
-                  <span class="drop-6"></span>
-                </div>
-                <div class="can-label">
-                  <span class="brand-tag">Coca-Cola</span>
-                  <span class="brand-name">PHANTA</span>
-                  <span class="brand-sub">Halloween 2026</span>
-                  <span class="brand-scan" aria-label="AR scan code"></span>
-                </div>
-                <div class="absolute inset-x-5 bottom-10 h-28 rounded-[30px] bg-gradient-to-b from-ember/25 via-crimson/15 to-transparent"></div>
-                <div class="ember-ring"></div>
-              </div>
+              <div class="bottle relative z-10 mx-auto" id="heroProductFrame"></div>
             </div>
 
             <div class="absolute left-4 top-6 animate-drift">
@@ -1144,7 +1126,11 @@
         button.style.opacity = '0.8';
       });
 
-      const fallbackImage = 'assets/images/can_transparent.png';
+      const fallbackImage = 'assets/images/phantasmagoria-can-transparent.png';
+      const canImage = 'assets/images/phantasmagoria-can-transparent.png';
+      const flavorImage = '';
+      const pumpkinImage = 'assets/images/jack-o-lantern-transparent.png';
+      const qrPathLocal = 'assets/images/qr.png';
 
       const setFallbackImage = (imgEl) => {
         if (!imgEl) return;
@@ -1158,12 +1144,14 @@
 
         if (heroTarget) {
           heroTarget.innerHTML = `
-            <div class="real-product-media photo-wrap" style="width:320px;height:520px;border-radius:12px;">
-              <img src="${imageUrl}" alt="Real Coca-Cola can for Phantasmagoria Halloween edition" />
-              <div class="product-scan-chip"></div>
+            <div class="real-product-media photo-wrap" style="width:320px;height:520px;border-radius:16px; overflow:visible;">
+              <img src="${imageUrl}" alt="Phantasmagoria Halloween edition Coca-Cola can" style="width:100%;height:100%;object-fit:contain;display:block;" />
+              <img src="${pumpkinImage}" alt="Jack-o-lantern detail" style="position:absolute; left:16px; top:18px; width:84px; height:84px; object-fit:contain; filter:drop-shadow(0 8px 18px rgba(255,120,34,0.42));" />
+              ${flavorImage ? `<img src="${flavorImage}" alt="Blackberry cinnamon product label" style="position:absolute; left:50%; bottom:-12px; width:250px; transform:translateX(-50%); object-fit:contain; opacity:0.96; filter:drop-shadow(0 8px 14px rgba(0,0,0,0.3));" />` : ''}
+              <div class="product-scan-chip"><img src="${qrPathLocal}" alt="Scan to open Phantasmagoria" /></div>
             </div>
           `;
-          const heroImg = heroTarget.querySelector('img');
+          const heroImg = heroTarget.querySelector('img[src="' + imageUrl + '"]');
           if (heroImg) {
             heroImg.onerror = () => setFallbackImage(heroImg);
           }
@@ -1171,12 +1159,13 @@
 
         if (showcaseTarget) {
           showcaseTarget.innerHTML = `
-            <div class="real-product-media" style="border-radius:24px; box-shadow: 0 24px 40px rgba(0,0,0,0.38); width:220px; height:360px;">
-              <img src="${imageUrl}" alt="Halloween edition Coca-Cola can display" />
-              <div class="product-scan-chip" style="right:14px; bottom:14px; width:48px; height:48px;"></div>
+            <div class="real-product-media" style="border-radius:24px; box-shadow: 0 24px 40px rgba(0,0,0,0.38); width:220px; height:360px; overflow:visible;">
+              <img src="${imageUrl}" alt="Halloween edition Coca-Cola can display" style="width:100%;height:100%;object-fit:contain;display:block;" />
+              ${flavorImage ? `<img src="${flavorImage}" alt="Blackberry cinnamon detail" style="position:absolute; left:50%; bottom:-10px; width:170px; transform:translateX(-50%); object-fit:contain; opacity:0.96;" />` : ''}
+              <div class="product-scan-chip" style="right:14px; bottom:14px; width:48px; height:48px;"><img src="${qrPathLocal}" alt="Scan to open Phantasmagoria" /></div>
             </div>
           `;
-          const showcaseImg = showcaseTarget.querySelector('img');
+          const showcaseImg = showcaseTarget.querySelector('img[src="' + imageUrl + '"]');
           if (showcaseImg) {
             showcaseImg.onerror = () => setFallbackImage(showcaseImg);
           }
@@ -1185,16 +1174,16 @@
 
       async function loadRealCokeCan() {
         const localImages = [
-          'assets/images/can_transparent.png',
-          'assets/images/can_transparent.png',
-          'assets/images/can_transparent.png'
+          canImage,
+          canImage,
+          canImage
         ];
 
         try {
           const pick = localImages[Math.floor(Math.random() * localImages.length)];
           setRealCanImage(pick);
         } catch (err) {
-          console.warn('Failed to load transparent can image, using fallback.', err);
+          console.warn('Failed to load Halloween can image, using fallback.', err);
           setRealCanImage(fallbackImage);
         }
       }
@@ -1235,17 +1224,16 @@
       loadRealCokeCan();
 
       // Insert the local QR image into scan chips and overlays so scanning opens this landing page.
-      const qrPathLocal = 'assets/images/qr.png';
       const placeQRCode = () => {
         document.querySelectorAll('.product-scan-chip').forEach(el => {
-          el.innerHTML = `<img src="${qrPathLocal}" alt="Scan to open Phantasmagoria" />`;
+          if (!el.querySelector('img')) {
+            el.innerHTML = `<img src="${qrPathLocal}" alt="Scan to open Phantasmagoria" />`;
+          }
         });
         document.querySelectorAll('.ar-overlay').forEach(el => {
-          // keep a small AR badge in places where overlay exists
           el.innerHTML = `<div style="font-weight:700;font-size:11px;letter-spacing:0.18em;color:rgba(255,255,255,0.9);">AR</div>`;
         });
       };
-      // Delay to ensure dynamic DOM injected by loadRealCokeCan is present.
       setTimeout(placeQRCode, 600);
     </script>
   </body>
