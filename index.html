@@ -1144,7 +1144,13 @@
         button.style.opacity = '0.8';
       });
 
-      const fallbackImage = 'https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=900&q=80';
+      const fallbackImage = 'assets/images/can_transparent.png';
+
+      const setFallbackImage = (imgEl) => {
+        if (!imgEl) return;
+        imgEl.onerror = null;
+        imgEl.src = fallbackImage;
+      };
 
       const setRealCanImage = (imageUrl) => {
         const heroTarget = document.getElementById('heroProductFrame');
@@ -1157,6 +1163,10 @@
               <div class="product-scan-chip"></div>
             </div>
           `;
+          const heroImg = heroTarget.querySelector('img');
+          if (heroImg) {
+            heroImg.onerror = () => setFallbackImage(heroImg);
+          }
         }
 
         if (showcaseTarget) {
@@ -1166,6 +1176,10 @@
               <div class="product-scan-chip" style="right:14px; bottom:14px; width:48px; height:48px;"></div>
             </div>
           `;
+          const showcaseImg = showcaseTarget.querySelector('img');
+          if (showcaseImg) {
+            showcaseImg.onerror = () => setFallbackImage(showcaseImg);
+          }
         }
       };
 
