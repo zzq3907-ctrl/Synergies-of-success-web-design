@@ -84,6 +84,52 @@
         text-shadow: 0 0 18px rgba(255, 94, 0, 0.7), 0 0 35px rgba(255, 94, 0, 0.35), 0 0 55px rgba(214, 0, 28, 0.18);
       }
 
+      .brand-mark {
+        width: 88px;
+        opacity: 0.82;
+        filter: drop-shadow(0 10px 20px rgba(255, 94, 0, 0.12));
+      }
+
+      .brand-mark img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .brand-slogan {
+        font-size: 10px;
+        line-height: 1.5;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(245, 235, 230, 0.7);
+        text-shadow: 0 0 8px rgba(255, 94, 0, 0.12);
+      }
+
+      .brand-slogan-block {
+        position: relative;
+        margin-top: 0.75rem;
+        padding-left: 0.35rem;
+        opacity: 0.9;
+      }
+
+      .brand-slogan-block .label {
+        display: inline-block;
+        font-size: 9px;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: rgba(255, 94, 0, 0.86);
+        margin-bottom: 0.45rem;
+      }
+
+      .brand-slogan-block .text {
+        display: block;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        line-height: 1.6;
+        color: rgba(245, 235, 230, 0.78);
+        text-transform: none;
+      }
+
       .bg-grid {
         background-image:
           linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
@@ -797,10 +843,12 @@
     <div class="fixed inset-0 bg-grid opacity-20 pointer-events-none"></div>
 
     <header class="relative z-20">
-      <nav class="max-w-7xl mx-auto px-4 md:px-8 py-6 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-br from-ember to-crimson shadow-ember flex items-center justify-center font-black text-lg">C</div>
-          <div>
+      <nav class="max-w-7xl mx-auto px-4 md:px-8 py-6 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="brand-mark shrink-0">
+            <img src="assets/images/logo-transparent.png" alt="Phantasmagoria logo" />
+          </div>
+          <div class="min-w-0">
             <div class="tracking-[0.35em] text-[10px] text-parchment/70">COCA-COLA</div>
             <div class="tracking-[0.28em] text-xs text-ember font-semibold">PHANTASMAGORIA</div>
           </div>
@@ -826,6 +874,11 @@
             <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-ember/30 bg-ember/10 px-4 py-2 text-[10px] font-medium uppercase tracking-[0.28em] text-ember">
               <span class="inline-block w-2 h-2 rounded-full bg-ember animate-pulse"></span>
               2026 Halloween Special Campaign
+            </div>
+
+            <div class="brand-slogan-block">
+              <span class="label">Slogan</span>
+              <span class="text">Where Magic Meets Reality</span>
             </div>
 
             <h1 class="font-display mt-6 text-5xl md:text-6xl xl:text-[6.2rem] leading-[0.88] text-parchment text-shadow-ember tracking-[-0.06em]">
